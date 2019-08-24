@@ -1,0 +1,2 @@
+python3 ./lable_image.py --graph=./output/retraiin_graph.pb --labels=./output/output_labels.txt --input_layer=Placeholder --output_layer=final_result --image=./test_img/LPC_0019.jpg
+

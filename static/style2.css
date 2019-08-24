@@ -1,0 +1,40 @@
+
+@import "https://unpkg.com/ionicons@4.5.5/dist/ionicons.js";
+.body{
+    margin: 0;
+    padding: 0;
+}
+
+.images{
+    overflow: hidden;
+}
+
+.images img{
+    height: 100px;
+    width: 100px;
+    margin: 10;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.images img:hover{
+    opacity: 0.8;
+}
+.pre{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.pre img{
+    width: 100%;
+    height: 100%;
+}
+.pre a{
+    top:0;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+}
