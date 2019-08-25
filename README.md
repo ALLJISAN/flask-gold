@@ -1,2 +1,2 @@
 # flask-gold
-For leraning flask and python
+For leraning flask and python.
