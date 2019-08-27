@@ -33,7 +33,7 @@ def resultgold(imgName):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     #return render_template("Untitled-1.html")
-    return redirect(url_for("pikachu"))
+    return redirect(url_for("gold"))
 
 @app.route('/pikachu', methods=['GET', 'POST'])
 def pikachu(imgName=""):
