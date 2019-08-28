@@ -42,11 +42,21 @@
         <p style="margin-top:3em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       </aside>
       <h1><a name="2"></a><!-- Blog title -->INFORMATION</h1>
-      <h3><!-- Tagline -->SOME AWESOME HERO TAGLINE</h3>
+      <h3><!-- Tagline -->金相组织识别</h3>
       <div id="bannerImage"><img src="BlogPostAssets/images/SliderLayerImage.png" alt=""/></div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-      
+      <p>
+                该功能实现最传统意义上的图片识别，对上传的组织进行识别。该项目最初期望能将各种金属的组织进行识别以及力学分析，
+            并对其中的裂纹与人工取样造成划痕进行区分，帮助分析人员分析样品。但是......理想很丰满，现实很骨感。好吧，其实是因为
+            我们太菜了所以做不出来[滑稽.jpg]。不过本着垃圾回收的环保理念就把已经做出来的部分放上来分享一下。 
+        </p>
+            <h2>铁碳金相组织</h2>
+            <p>
+                关于钢的退火和正火组织很好识别，因为各组织间相差较大，所以哪怕只是用原生的CNN以及较少的样本量都能得到较好的效果，准确率
+            在95%左右。但是钢的淬火，回火组织以及铁的相关组织准确率就会大幅下降，用原生CNN准确率在55%左右。造成这样的原因有两个，一个是
+            样本量太小了，学生党能拿到的数据量真的不多，只能说凑合着用；另外一个就是组织本身确实有很多相似的地方。对此，原生的CNN可能难以
+            做到较好的分类效果。这个时候就需要更换模型，我们选择使用inception V3。
+
+            </p>
     </section>
     <section id="sidebar"> 
       <!--************************************************************************
