@@ -39,15 +39,14 @@
         </div>
         <iframe src="http://small-brother.cn/result/{{imgName}}" style="width:256px;height:256px;float: left;"></iframe>
         <br style="clear:both" />
-        <p style="margin-top:3em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p style="margin-top:3em;">点击图片上传</p>
       </aside>
       <h1><a name="2"></a><!-- Blog title -->INFORMATION</h1>
       <h3><!-- Tagline -->金相组织识别</h3>
       <div id="bannerImage"><img src="BlogPostAssets/images/SliderLayerImage.png" alt=""/></div>
       <p>
                 该功能实现最传统意义上的图片识别，对上传的组织进行识别。该项目最初期望能将各种金属的组织进行识别以及力学分析，
-            并对其中的裂纹与人工取样造成划痕进行区分，帮助分析人员分析样品。但是......理想很丰满，现实很骨感。好吧，其实是因为
-            我们太菜了所以做不出来[滑稽.jpg]。不过本着垃圾回收的环保理念就把已经做出来的部分放上来分享一下。 
+            并对其中的裂纹与人工取样造成划痕进行区分，帮助分析人员分析样品。但是......理想很丰满，现实很骨感。 
         </p>
             <h2>铁碳金相组织</h2>
             <p>
@@ -56,6 +55,13 @@
             样本量太小了，学生党能拿到的数据量真的不多，只能说凑合着用；另外一个就是组织本身确实有很多相似的地方。对此，原生的CNN可能难以
             做到较好的分类效果。这个时候就需要更换模型，我们选择使用inception V3。
 
+            </p>
+            <h2>Inception V3</h2>
+            <p>
+              Inception为Google开源的CNN模型，至今已经公开四个版本，每一个版本都是基于大型图像数据库ImageNet中的数据训练而成。
+              因此我们可以直接利用Google的Inception模型来实现图像分类。
+              Inception v3模型大约有2500万个参数，分类一张图像就用了50亿的乘加指令。
+              在一台没有GPU的现代PC上，分类一张图像转眼就能完成。而且Inception V3模型在现在仍然有着良好的泛化能力和较高的准确率。
             </p>
     </section>
     <section id="sidebar"> 
