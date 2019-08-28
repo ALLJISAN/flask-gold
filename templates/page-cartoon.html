@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BlogPost template by Adobe Dreamweaver CC</title>
+<title>图片动画风格转换</title>
 <link href="../static/page.css" rel="stylesheet" type="text/css">
 <!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.--><script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 </head>
@@ -39,14 +39,67 @@
         </div>
         <iframe src="http://small-brother.cn/result" style="width:256px;height:256px;float: left;background-image: url(../static/photo/{{imgName}});"></iframe>
         <br style="clear:both" />
-        <p style="margin-top:3em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p style="margin-top:3em;">照片卡通化是一个将上传的三次元图片转变为二次元画风的功能</p>
       </aside>
-      <h1><a name="2"></a><!-- Blog title -->INFORMATION</h1>
+      <h1><a name="2"></a><!-- Blog title -->相关原理</h1>
       <h3><!-- Tagline -->SOME AWESOME HERO TAGLINE</h3>
       <div id="bannerImage"><img src="BlogPostAssets/images/SliderLayerImage.png" alt=""/></div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-      
+      <p>
+            在photshop中，常常使用照亮边缘和干笔画的滤镜来实现图片的卡通化，实质上是增强边缘与减少色彩。
+            因此，理论上来说只要增强图片的轮廓以及减少图片的色彩都能实现这样的效果。但在实际上使用代码实现
+            需要先了解一些图片处理的原理。
+      </p>
+        <h2>灰度化与二值化</h2>
+            <p>
+                图片在计算机的视角中是一个三维数组即u*v*w，就像[[[0,255,0],[255,0,0],[0,0,255]]]表示的是该图片大小为1*3*3，
+                第一个像素点的颜色是绿色。 减少图片色彩通常将彩色图片转化为灰度图，即将一个像素点的三颜色通道的值变为只有一
+                个通道一个值，有好几种转换公式。常用的有：<br>
+                (1) Gray = R*0.299 + G*0.587 + B*0.114;<br>
+                (2) Gray=R+G+B/3;<br>
+                转变后的灰度图只需2维数组就可以表示了即n*m，使用opencv中的cv2.cvtColor()便能够实现，其数学原理是公式（1）的
+                变种。转化为灰度图后，计算量已经大幅下降， 但是为了更好的降噪，一般会选择将灰度图二值化，所谓的二值化，即将
+                0-255的值变成只有0和255两种值，实现原理也很简单，就是规定当灰度值大于某个界限时，将其赋值为255,低于该值时，
+                将其赋值为0.在opencv中，比较常用的是自适应阈值的方法cv2.adaptiveThreshold()，即较亮的地方阈值较高，较暗的地方
+                阈值较低。自适应阈值函数中阈值的有两种计算方式，一种叫做 ADAPTIVE_THRESH_MEAN_C，该方式的阈值为该点减去C的邻
+                域灰度值的均值；另外一种是ADAPTIVE_THRESH_GAUSSIAN_C，该点减去C的邻域灰度值的加权和，C是一个随机的常量。
+            </p>
+        <h2>采样与滤波</h2>
+            <p>
+                图像金字塔是图像处理中经常遇到的概念，是一种以多尺度描述图像的表达，其意义是图像自下而上分辨率逐渐下降，
+                就像金字塔一般，最上层的图像最小，分辨率最低； 而最底层的尺寸最大，分辨率最大。下采样的意思是从底层向上采
+                集数据，得到的图像的分辨率是较之前要小的；而上采样则是从高层向低层采集数据，得到的图像的分辨率较之前的要高。
+            </p>
+        <h3>下采样原理</h3>
+            <p>
+                使用高斯核对图像进行卷积(高斯平滑)，然后删除偶数行和偶数列，得到只有原来图像一半大小的新图像。重复n次便
+                可以得到想要的图像。
+            </p>
+        <h3>上采样原理</h3>
+            <p>
+                使用内插法，先将图像放大一倍，多出的行和列以0填充，然后内插值代替这些0。内插法的类型很多这里不做一一介绍。
+            </p>
+        <p>
+            opencv中下采样和上采样都已经集成好了，分别为cv2.pyrDown和cv2.pyrUp。
+        </p>
+        <h3>双边滤波</h3>
+        <p>
+            双边滤波是一种保持边缘的同时能很好的进行平滑去噪。其原理有些复杂，与其他滤波相比，它考虑了空间域值与核域值。
+            具体可以参考这篇文章"https://blog.csdn.net/guyuealian/article/details/82660826"。opencv中实现了该过滤的是
+            cv2.bilateralFilter。
+        </p>
+        <h3>中值滤波</h3>
+        <p>
+            中值滤波是非线性的图像处理方法，在去噪的同时可以兼顾到边界信息的保留。选一个含有奇数点的窗口W，将这个窗口
+            在图像上扫描，把窗口中所含的像素点按灰度级的升或降序排列，取位于中间的灰度值来代替该点的灰度值。opencv中使用
+            cv2.medianBlur实现。
+        </p>
+    <h1>实现步骤</h1>
+        <p>
+            步骤1：下采样，双边滤波，上采样得到降噪和模糊化后的图片<br>
+            步骤2：灰度化与中值滤波，得到边缘<br>
+            步骤3：二值化深化图像边缘<br>
+            步骤4：将步骤1与步骤3的图片合并<br>
+        </p>      
     </section>
     <section id="sidebar"> 
       <!--************************************************************************
